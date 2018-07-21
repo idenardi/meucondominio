@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:conv="clr-namespace:MeuCondominio.Converters"
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
+             xmlns:circle="clr-namespace:ButtonCircle.FormsPlugin.Abstractions;assembly=ButtonCircle.FormsPlugin.Abstractions"
+             x:Class="MeuCondominio.BoardPage" BackgroundColor="#F1F1F1">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:DateTimeConverter x:Key="dateTimeConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <ListView ItemsSource="{Binding BoardMessages}" IsPullToRefreshEnabled="True" x:Name="lvMessages" Refreshing="lvMessages_Refreshing"  SeparatorVisibility="None" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid RowSpacing="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <controls:CircleImage 
+                                    Grid.Column="0" Grid.Row="0"
+                                    Source="{Binding User.ProfileImage}" 
+                                    WidthRequest="50" 
+                                    HeightRequest="50"
+                                    MinimumHeightRequest="50"
+                                    MinimumWidthRequest="50" 
+                                    BorderColor="White"
+                                    BorderThickness="1"
+                                    VerticalOptions="Start"
+                                    Margin="4,2,1,2"/>
+
+                                <Frame 
+                                    Grid.Column="1" Grid.Row="0"
+                                    CornerRadius="3" 
+                                    Padding="4" 
+                                    Margin="3,3,6,2"
+                                    BackgroundColor="White">
+                                    <Frame.HasShadow>
+                                        <OnPlatform x:TypeArguments="x:Boolean" Android="true" iOS="false"/>
+                                    </Frame.HasShadow>
+                                    <StackLayout>
+                                        <Label Text="{Binding Content}" TextColor="Black"/>
+                                    </StackLayout>
+                                </Frame>
+
+                                <Label
+                                    Grid.ColumnSpan="2" 
+                                    Grid.Column="0"
+                                    Grid.Row="1"
+                                    Text="{Binding Created}"
+                                    HorizontalOptions="EndAndExpand"
+                                    Margin="0,0,8,12"
+                                    FontSize="11"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout
+                Grid.Row="1"
+                Orientation="Horizontal">
+                <Entry 
+                    HorizontalOptions="FillAndExpand"  
+                    Placeholder="digite aqui sua mensagem"  
+                    x:Name="txtMessage" 
+                    Keyboard="Chat"
+                    Margin="4"/>
+                <circle:CircleButton 
+                    FontIcon="Material"
+                    Icon="md-send" 
+                    FontSize="20"
+                    Margin="0,0,4,4"
+                    TextColor="White" 
+                    HeightRequest="45" 
+                    WidthRequest="45" 
+                    BorderThickness="0"
+                    BackgroundColor="DodgerBlue" 
+                    x:Name="btnSend"
+                    Clicked="btnSend_Clicked">
+                </circle:CircleButton>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

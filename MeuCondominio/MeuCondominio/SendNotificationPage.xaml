@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:conv="clr-namespace:MeuCondominio.Converters"
+             x:Class="MeuCondominio.SendNotificationPage" BackgroundColor="#F1F1F1">
+
+    <ContentPage.Content>
+        <Grid RowSpacing="1" Margin="12,4,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Text="Tipo"></Label>
+            <Picker Grid.Row="1" x:Name="pcTipo" Title="Selecione o tipo" SelectedItem="Correspondencia">
+                <Picker.Items>
+                    <x:String>Condominio</x:String>
+                    <x:String>Correspondencia</x:String>
+                    <x:String>Sedex</x:String>
+                </Picker.Items>
+            </Picker>
+            <Label Grid.Row="2" Text="Descrição"></Label>
+            <Entry Grid.Row="3" x:Name="txtText" Text="{Binding Notification.Text}" Placeholder="(opcional)"></Entry>
+            <Label Grid.Row="4" Text="Selecione os apartamentos"></Label>
+            <ListView Grid.Row="5" ItemsSource="{Binding Notification.lstPlaces}" RowHeight="40" Margin="0,4,0,4" ItemTapped="ListView_ItemTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid BackgroundColor="{Binding IsSelected, Converter={conv:SelectedColorConverter}}">
+                                <Grid Grid.Column="0" HorizontalOptions="EndAndExpand" >
+                                    <Label Grid.Column="0" Text="Apto: " VerticalOptions="CenterAndExpand"></Label>
+                                    <Label Grid.Column="1" Text="{Binding Number}" VerticalOptions="CenterAndExpand" FontSize="20"  FontAttributes="Bold"></Label>
+                                </Grid>
+                                
+                                <Grid Grid.Column="1" HorizontalOptions="EndAndExpand" Margin="8,0">
+                                    <Label Grid.Column="0" Text="Bloco: " VerticalOptions="CenterAndExpand"></Label>
+                                    <Label Grid.Column="1" Text="{Binding Block}" VerticalOptions="CenterAndExpand" FontSize="20" FontAttributes="Bold"></Label>
+                                </Grid>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout Grid.Row="6" Margin="0,2,0,4">
+                <Button x:Name="btnEnviar" Text="Enviar" BackgroundColor="DodgerBlue" TextColor="White" Clicked="btnEnviar_Clicked"></Button>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

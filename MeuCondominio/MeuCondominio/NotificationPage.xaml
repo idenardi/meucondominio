@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:conv="clr-namespace:MeuCondominio.Converters"
+             xmlns:design="clr-namespace:MeuCondominio;assembly=MeuCondominio"
+             BindingContext="{x:Static design:ViewModelLocator.NotificationsViewModel}"
+             x:Class="MeuCondominio.NotificationPage" BackgroundColor="#F1F1F1">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:DateTimeConverter x:Key="dateTimeConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ListView
+            Grid.Row="0"
+            ItemsSource="{Binding Notifications}" 
+            RowHeight="50" 
+            IsPullToRefreshEnabled="True"
+            x:Name="lvNotification"
+            Refreshing="ListView_Refreshing"
+            SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame 
+                            CornerRadius="2" 
+                            Padding="0"
+                            Margin="4,2,4,2">
+                            <StackLayout 
+                                Orientation="Horizontal" 
+                                BackgroundColor="White">
+                                <Image 
+                                    HorizontalOptions="Start" 
+                                    Source="{Binding NotificationImage}" 
+                                    WidthRequest="50" 
+                                    HeightRequest="50" 
+                                    Margin="0,6" />
+                                <StackLayout 
+                                    HorizontalOptions="StartAndExpand" 
+                                    VerticalOptions="CenterAndExpand" Spacing="1">
+                                    <Label 
+                                        Text="{Binding NotificationText}" 
+                                        FontSize="13" />
+                                </StackLayout>
+                                <StackLayout 
+                                    HorizontalOptions="End" 
+                                    VerticalOptions="StartAndExpand" 
+                                    Spacing="1" 
+                                    Margin="0,4,6,0" 
+                                    HeightRequest="38">
+                                    <Label 
+                                        HorizontalOptions="End" 
+                                        VerticalOptions="StartAndExpand" 
+                                        Text="{Binding DateTimeSent, Converter={StaticResource dateTimeConverter}}"
+                                        TextColor="#b1b1b1" 
+                                        FontSize="10"/>
+                                    <Label 
+                                        Text="{Binding Sender}" 
+                                        VerticalOptions="EndAndExpand" 
+                                        TextColor="Gray" 
+                                        FontSize="12" 
+                                        FontAttributes="Bold"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentPage.Content>
+</ContentPage>
